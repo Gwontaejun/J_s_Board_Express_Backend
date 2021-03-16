@@ -6,16 +6,10 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql"); // mysql 모듈 사용
 
-// const { createProxyMiddleware } = require('http-proxy-middleware');
-
-// module.exports = function(app){
-//   app.use(
-//       createProxyMiddleware('/', {
-//           target: 'http://j-s-board-express-backend.herokuapp.com',
-//           changeOrigin: true
-//       })
-//   )
-// };
+var http = require("http");
+setInterval(function() {
+    http.get("http://j-s-board-express-backend.herokuapp.com");
+}, 300000);
 
 var connection = mysql.createConnection({
     host: "us-cdbr-east-03.cleardb.com",
