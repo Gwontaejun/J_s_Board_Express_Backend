@@ -9,7 +9,7 @@ const mysql = require("mysql"); // mysql 모듈 사용
 var http = require("http");
 setInterval(function() {
     http.get("http://j-s-board-express-backend.herokuapp.com");
-}, 300000);
+}, 200000);
 
 var connection = mysql.createConnection({
     host: "us-cdbr-east-03.cleardb.com",
