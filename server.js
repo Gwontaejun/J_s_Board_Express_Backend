@@ -138,9 +138,7 @@ app.post("/BoardInsert", (req, res) => {
         if (err) {
             console.log("BoardInsert Error", err);
         } else {
-            res.send({
-                rows
-            });
+            res.send(rows);
         };
     });
 });
