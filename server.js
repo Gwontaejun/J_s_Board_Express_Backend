@@ -2,22 +2,20 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3002;
 
-app.get('/', (req, res) => res.send("hello world"));
-// app.listen(port, () => console.log(`Connect at http://localhost:${port}`));
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql"); // mysql 모듈 사용
 
-const { createProxyMiddleware } = require('http-proxy-middleware');
+// const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function(app){
-  app.use(
-      createProxyMiddleware('/', {
-          target: 'http://j-s-board-express-backend.herokuapp.com',
-          changeOrigin: true
-      })
-  )
-};
+// module.exports = function(app){
+//   app.use(
+//       createProxyMiddleware('/', {
+//           target: 'http://j-s-board-express-backend.herokuapp.com',
+//           changeOrigin: true
+//       })
+//   )
+// };
 
 var connection = mysql.createConnection({
     host: "us-cdbr-east-03.cleardb.com",
@@ -138,9 +136,9 @@ app.post("/BoardInsert", (req, res) => {
     const params = [req.body.Board_No, req.body.Board_Theme, req.body.Board_Title, req.body.Board_Content, req.body.Board_WriteDate, req.body.User_Id, req.body.User_Name];
     connection.query(query, params, (err, rows, result) => {
         if (err) {
-            alert("BoardInsert Error", err);
+            console.log("BoardInsert Error", err);
         } else {
-            alert(rows);
+            console.log(rows);
         };
     });
 });
