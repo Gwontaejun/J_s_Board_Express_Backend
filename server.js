@@ -138,9 +138,9 @@ app.post("/BoardInsert", (req, res) => {
     const params = [req.body.Board_No, req.body.Board_Theme, req.body.Board_Title, req.body.Board_Content, req.body.Board_WriteDate, req.body.User_Id, req.body.User_Name];
     connection.query(query, params, (err, rows, result) => {
         if (err) {
-            console.log("BoardInsert Error", err);
+            alert("BoardInsert Error", err);
         } else {
-            console.log(rows);
+            alert(rows);
         };
     });
 });
