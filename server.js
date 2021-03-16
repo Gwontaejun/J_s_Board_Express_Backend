@@ -2,34 +2,33 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3002;
 
-app.get('/', (req, res) => res.send("hello world"));
-// app.listen(port, () => console.log(`Connect at http://localhost:${port}`));
-// const cors = require("cors");
-// const bodyParser = require("body-parser");
-// const mysql = require("mysql"); // mysql 모듈 사용
-// // const { createProxyMiddleware } = require('http-proxy-middleware');
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mysql = require("mysql"); // mysql 모듈 사용
 
-// // module.exports = function(app){
-// //   app.use(
-// //       createProxyMiddleware('/', {
-// //           target: 'http://localhost:3002',
-// //           changeOrigin: true
-// //       })
-// //   )
-// // };
+// const { createProxyMiddleware } = require('http-proxy-middleware');
 
-// var connection = mysql.createConnection({
-//     host: "localhost",
-//     user: "root", //mysql의 id
-//     password: "root1234", //mysql의 password
-//     database: "j_s_board", //사용할 데이터베이스
-// });
+// module.exports = function(app){
+//   app.use(
+//       createProxyMiddleware('/', {
+//           target: 'http://localhost:3002',
+//           changeOrigin: true
+//       })
+//   )
+// };
 
-// connection.connect();
+var connection = mysql.createConnection({
+    host: "us-cdbr-east-03.cleardb.com",
+    user: "bb94c115e6b589", //mysql의 id
+    password: "05b341eb", //mysql의 password
+    database: "heroku_30d79440d15b677", //사용할 데이터베이스
+});
 
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-// app.use(cors());
+connection.connect();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
 
 
 /*----------------------------------------------------------------------------------------------------------------------*/
@@ -66,6 +65,18 @@ app.get('/CountList', (req, res) => {
 })
 
 /*----------------------------------------------------------------------------------------------------------------------*/
+
+// Board_No를 가져오기 위한 쿼리(Heroku clearDB 특성상 A.I가 10씩 증가하는 경우가있어서 하나하나씩 가져와서 해야할듯함)
+app.get('/BoardNoGet', (req, res) => {
+    connection.query("SELECT Board_No FROM Board ORDER BY Board_No DESC",
+        function (err, rows) {
+            if (err) {
+                console.log("BoardList Error");
+            } else {
+                res.send(rows[0]);
+            }
+        })
+})
 
 // BoardList 쿼리
 app.get('/BoardList', (req, res) => {
@@ -122,8 +133,8 @@ app.patch('/BoardUpdate', (req, res) => {
 });
 // BoardInsert 쿼리
 app.post("/BoardInsert", (req, res) => {
-    const query = 'INSERT INTO Board (Board_Theme, Board_Title, Board_Content, Board_WriteDate, User_Id, User_Name) values (?,?,?,?,?,?)';
-    const params = [req.body.Board_Theme, req.body.Board_Title, req.body.Board_Content, req.body.Board_WriteDate, req.body.User_Id, req.body.User_Name];
+    const query = 'INSERT INTO Board (Board_No, Board_Theme, Board_Title, Board_Content, Board_WriteDate, User_Id, User_Name) values (?, ?,?,?,?,?,?)';
+    const params = [req.body.Board_No, req.body.Board_Theme, req.body.Board_Title, req.body.Board_Content, req.body.Board_WriteDate, req.body.User_Id, req.body.User_Name];
     connection.query(query, params, (err, rows, result) => {
         if (err) {
             console.log("BoardInsert Error", err);
