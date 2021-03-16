@@ -7,16 +7,17 @@ app.get('/', (req, res) => res.send("hello world"));
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql"); // mysql 모듈 사용
-// const { createProxyMiddleware } = require('http-proxy-middleware');
 
-// module.exports = function(app){
-//   app.use(
-//       createProxyMiddleware('/', {
-//           target: 'http://localhost:3002',
-//           changeOrigin: true
-//       })
-//   )
-// };
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = function(app){
+  app.use(
+      createProxyMiddleware('/', {
+          target: 'http://j-s-board-express-backend.herokuapp.com',
+          changeOrigin: true
+      })
+  )
+};
 
 var connection = mysql.createConnection({
     host: "us-cdbr-east-03.cleardb.com",
