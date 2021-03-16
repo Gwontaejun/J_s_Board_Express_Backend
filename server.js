@@ -159,7 +159,7 @@ app.get('/CommentRead', (req, res) => {
             }
         })
 });
-
+// CommentInsert 쿼리
 app.post("/CommentInsert", (req, res) => {
     const query = 'INSERT INTO Comment(Board_No, Comment_Content, Comment_WriteDate, User_Id, User_Name) values (?,?,?,?,?)';
     const params = [req.body.Board_No, req.body.Comment_Content, req.body.Comment_WriteDate, req.body.User_Id, req.body.User_Name]; 
@@ -168,7 +168,7 @@ app.post("/CommentInsert", (req, res) => {
         if (err) {
             console.log("CommentInsert Error", err);
         } else {
-            console.log(rows);
+            res.send(rows);
         };
     });
 });
