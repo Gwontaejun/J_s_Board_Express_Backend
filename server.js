@@ -55,7 +55,6 @@ app.get('/Board_Search', (req, res) => {
 // 왼쪽 네비바 데이터 쿼리
 app.get('/CountList', (req, res) => {
     const Order_Type = req.query.Order_Type;
-
     connection.query("SELECT Board_No, Board_Title, Read_Count FROM Board ORDER BY " + Order_Type + " DESC",
         function (err, rows) {
             if (err) {
@@ -135,8 +134,8 @@ app.patch('/BoardUpdate', (req, res) => {
 });
 // BoardInsert 쿼리
 app.post("/BoardInsert", (req, res) => {
-    const query = 'INSERT INTO Board (Board_Theme, Board_Title, Board_Content, Board_WriteDate, User_Id, User_Name) values (?,?,?,?,?,?)';
-    const params = [req.body.Board_Theme, req.body.Board_Title, req.body.Board_Content, req.body.Board_WriteDate, req.body.User_Id, req.body.User_Name];
+    const query = 'INSERT INTO Board (Board_No, Board_Theme, Board_Title, Board_Content, Board_WriteDate, User_Id, User_Name) values (?,?,?,?,?,?,?)';
+    const params = [req.body.Board_No, req.body.Board_Theme, req.body.Board_Title, req.body.Board_Content, req.body.Board_WriteDate, req.body.User_Id, req.body.User_Name];
     connection.query(query, params, (err, rows, result) => {
         if (err) {
             console.log("BoardInsert Error", err);
