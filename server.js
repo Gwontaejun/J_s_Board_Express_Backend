@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3002;
 
+app.get('/', (req, res) => res.send("hello world"));
+// app.listen(port, () => console.log(`Connect at http://localhost:${port}`));
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql"); // mysql 모듈 사용
-
 // const { createProxyMiddleware } = require('http-proxy-middleware');
 
 // module.exports = function(app){
@@ -133,8 +134,8 @@ app.patch('/BoardUpdate', (req, res) => {
 });
 // BoardInsert 쿼리
 app.post("/BoardInsert", (req, res) => {
-    const query = 'INSERT INTO Board (Board_No, Board_Theme, Board_Title, Board_Content, Board_WriteDate, User_Id, User_Name) values (?, ?,?,?,?,?,?)';
-    const params = [req.body.Board_No, req.body.Board_Theme, req.body.Board_Title, req.body.Board_Content, req.body.Board_WriteDate, req.body.User_Id, req.body.User_Name];
+    const query = 'INSERT INTO Board (Board_Theme, Board_Title, Board_Content, Board_WriteDate, User_Id, User_Name) values (?,?,?,?,?,?)';
+    const params = [req.body.Board_Theme, req.body.Board_Title, req.body.Board_Content, req.body.Board_WriteDate, req.body.User_Id, req.body.User_Name];
     connection.query(query, params, (err, rows, result) => {
         if (err) {
             console.log("BoardInsert Error", err);
