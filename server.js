@@ -6,10 +6,11 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql"); // mysql 모듈 사용
 
+// Heroku가 30분동안 활동을 안하면 sleep모드로 들어가는데 그것을 방지함.
 var http = require("http");
 setInterval(function() {
     http.get("http://j-s-board-express-backend.herokuapp.com");
-}, 200000);
+}, 600000);
 
 var db_config = {
     host: "us-cdbr-east-03.cleardb.com",
@@ -20,23 +21,24 @@ var db_config = {
 
 var connection;
 
+// 서버가 끊겼을때 다시 연결하도록 하는 함수.
 function handleDisconnect() {
-  connection = mysql.createConnection(db_config); // Recreate the connection, since
-                                                  // the old one cannot be reused.
+  connection = mysql.createConnection(db_config); 
+                                                  
 
-  connection.connect(function(err) {              // The server is either down
-    if(err) {                                     // or restarting (takes a while sometimes).
+  connection.connect(function(err) {              
+    if(err) {                                     
       console.log('error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
-    }                                     // to avoid a hot loop, and to allow our node script to
-  });                                     // process asynchronous requests in the meantime.
-                                          // If you're also serving http, display a 503 error.
+      setTimeout(handleDisconnect, 2000); 
+    }                                     
+  });                                     
+                                          
   connection.on('error', function(err) {
     console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-      handleDisconnect();                         // lost due to either server restart, or a
-    } else {                                      // connnection idle timeout (the wait_timeout
-      throw err;                                  // server variable configures this)
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();                        
+    } else {                                     
+      throw err;                                 
     }
   });
 }
