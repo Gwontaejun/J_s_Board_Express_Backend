@@ -4,32 +4,32 @@ const port = process.env.PORT || 3002;
 
 app.get('/', (req, res) => res.send("hello world"));
 // app.listen(port, () => console.log(`Connect at http://localhost:${port}`));
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const mysql = require("mysql"); // mysql 모듈 사용
-// const { createProxyMiddleware } = require('http-proxy-middleware');
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
+// const mysql = require("mysql"); // mysql 모듈 사용
+// // const { createProxyMiddleware } = require('http-proxy-middleware');
 
-// module.exports = function(app){
-//   app.use(
-//       createProxyMiddleware('/', {
-//           target: 'http://localhost:3002',
-//           changeOrigin: true
-//       })
-//   )
-// };
+// // module.exports = function(app){
+// //   app.use(
+// //       createProxyMiddleware('/', {
+// //           target: 'http://localhost:3002',
+// //           changeOrigin: true
+// //       })
+// //   )
+// // };
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root", //mysql의 id
-    password: "root1234", //mysql의 password
-    database: "j_s_board", //사용할 데이터베이스
-});
+// var connection = mysql.createConnection({
+//     host: "localhost",
+//     user: "root", //mysql의 id
+//     password: "root1234", //mysql의 password
+//     database: "j_s_board", //사용할 데이터베이스
+// });
 
-connection.connect();
+// connection.connect();
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(cors());
 
 
 /*----------------------------------------------------------------------------------------------------------------------*/
