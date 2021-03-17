@@ -2,7 +2,7 @@
 
 본래 J_s_Board의 Firebase를 이용한 백엔드 구현을 Node.js의 Express를 사용하여 백엔드를 구현하였음.
 
-기존 Firebase 구현 Git 주소 : https://github.com/Gwontaejun/J_s_Board
+### 기존 Firebase 구현 Git 주소 : https://github.com/Gwontaejun/J_s_Board
 
 ---------------------------------------
 
