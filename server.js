@@ -124,13 +124,11 @@ app.get('/BoardRead', (req, res) => {
 // BoardDelete 쿼리
 app.delete("/BoardDelete", (req, res) => {
     const Board_No = req.body.Board_No;
-    console.log("test", Board_No);
     connection.query("DELETE FROM Board WHERE Board_NO = ?", [Board_No],
         function (err, rows, fields) {
             if (err) {
                 console.log("BoardDelete Error");
             } else {
-                console.log("BoardDelete Success");
             };
         });
 });
@@ -181,7 +179,6 @@ app.get('/CommentRead', (req, res) => {
 app.post("/CommentInsert", (req, res) => {
     const query = 'INSERT INTO Comment(Board_No, Comment_Content, Comment_WriteDate, User_Id, User_Name) values (?,?,?,?,?)';
     const params = [req.body.Board_No, req.body.Comment_Content, req.body.Comment_WriteDate, req.body.User_Id, req.body.User_Name]; 
-    console.log(params);
     connection.query(query, params, (err, rows, result) => {
         if (err) {
             console.log("CommentInsert Error", err);
@@ -192,5 +189,4 @@ app.post("/CommentInsert", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Connect at http://localhost:${port}`);
 })
